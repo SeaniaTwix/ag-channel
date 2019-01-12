@@ -1,11 +1,11 @@
 const AsyncIterableStream = require('async-iterable-stream');
 
-class SCChannel extends AsyncIterableStream {
+class AGChannel extends AsyncIterableStream {
   constructor(name, client, eventDemux, dataStream) {
     super();
-    this.PENDING = SCChannel.PENDING;
-    this.SUBSCRIBED = SCChannel.SUBSCRIBED;
-    this.UNSUBSCRIBED = SCChannel.UNSUBSCRIBED;
+    this.PENDING = AGChannel.PENDING;
+    this.SUBSCRIBED = AGChannel.SUBSCRIBED;
+    this.UNSUBSCRIBED = AGChannel.UNSUBSCRIBED;
 
     this.name = name;
     this.client = client;
@@ -67,8 +67,8 @@ class SCChannel extends AsyncIterableStream {
   }
 }
 
-SCChannel.PENDING = 'pending';
-SCChannel.SUBSCRIBED = 'subscribed';
-SCChannel.UNSUBSCRIBED = 'unsubscribed';
+AGChannel.PENDING = 'pending';
+AGChannel.SUBSCRIBED = 'subscribed';
+AGChannel.UNSUBSCRIBED = 'unsubscribed';
 
-module.exports = SCChannel;
+module.exports = AGChannel;

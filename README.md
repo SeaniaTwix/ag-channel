@@ -1,2 +1,2 @@
-# scchannel
-Channels for SocketCluster
+# ag-channel
+Channels for Asyngular
