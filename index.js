@@ -62,8 +62,12 @@ class AGChannel extends AsyncIterableStream {
     return this.client.isSubscribed(this.name, includePending);
   }
 
-  publish(data) {
-    return this.client.publish(this.name, data);
+  transmitPublish(data) {
+    return this.client.transmitPublish(this.name, data);
+  }
+
+  invokePublish(data) {
+    return this.client.invokePublish(this.name, data);
   }
 }
 
