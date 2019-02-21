@@ -1,6 +1,6 @@
-const AsyncIterableStream = require('async-iterable-stream');
+const ConsumableStream = require('consumable-stream');
 
-class AGChannel extends AsyncIterableStream {
+class AGChannel extends ConsumableStream {
   constructor(name, client, eventDemux, dataStream) {
     super();
     this.PENDING = AGChannel.PENDING;
@@ -14,8 +14,8 @@ class AGChannel extends AsyncIterableStream {
     this._dataStream = dataStream;
   }
 
-  createAsyncIterator(timeout) {
-    return this._dataStream.createAsyncIterator(timeout);
+  createConsumer(timeout) {
+    return this._dataStream.createConsumer(timeout);
   }
 
   listener(eventName) {
