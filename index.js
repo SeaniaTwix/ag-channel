@@ -22,68 +22,116 @@ class AGChannel extends ConsumableStream {
     return this._eventDemux.stream(`${this.name}/${eventName}`);
   }
 
-  closeListener(eventName) {
-    this.client.closeChannelListener(this.name, eventName);
+  close() {
+    this.client.closeChannel(this.name);
   }
 
-  closeAllListeners() {
-    this.client.closeAllChannelListeners(this.name);
+  kill() {
+    this.client.killChannel(this.name);
   }
 
-  getDataBackpressure() {
-    return this.client.getChannelDataBackpressure(this.name);
+  killOutputConsumer(consumerId) {
+    if (this.hasOutputConsumer(consumerId)) {
+      this.client.killChannelOutputConsumer(consumerId);
+    }
+  }
+
+  killListenerConsumer(consumerId) {
+    if (this.hasAnyListenerConsumer(consumerId)) {
+      this.client.killChannelListenerConsumer(consumerId);
+    }
+  }
+
+  getOutputConsumerStats(consumerId) {
+    if (this.hasOutputConsumer(consumerId)) {
+      return this.client.getChannelOutputConsumerStats(consumerId);
+    }
+    return undefined;
+  }
+
+  getListenerConsumerStats(consumerId) {
+    if (this.hasAnyListenerConsumer(consumerId)) {
+      return this.client.getChannelListenerConsumerStats(consumerId);
+    }
+    return undefined;
   }
 
   getBackpressure() {
     return this.client.getChannelBackpressure(this.name);
   }
 
-  getListenerConsumerStats(consumerId) {
-    return this.client.getChannelListenerConsumerStats(consumerId);
+  getListenerConsumerBackpressure(consumerId) {
+    if (this.hasAnyListenerConsumer(consumerId)) {
+      return this.client.getChannelListenerConsumerBackpressure(consumerId);
+    }
+    return 0;
   }
 
-  getListenerConsumerStatsList(eventName) {
-    return this.client.getChannelListenerConsumerStatsList(this.name, eventName);
+  getOutputConsumerBackpressure(consumerId) {
+    if (this.hasOutputConsumer(consumerId)) {
+      return this.client.getChannelOutputConsumerBackpressure(consumerId);
+    }
+    return 0;
   }
 
-  getAllListenersConsumerStatsList() {
-    return this.client.getAllChannelListenerConsumerStatsList(this.name);
+  closeOutput() {
+    this.client.channelCloseOutput(this.name);
+  }
+
+  closeListener(eventName) {
+    this.client.channelCloseListener(this.name, eventName);
+  }
+
+  closeAllListeners() {
+    this.client.channelCloseAllListeners(this.name);
+  }
+
+  killOutput() {
+    this.channelKillOutput(this.name);
   }
 
   killListener(eventName) {
-    this.client.killChannelListener(this.name, eventName);
+    this.client.channelKillListener(this.name, eventName);
   }
 
   killAllListeners() {
-    this.client.killAllChannelListeners(this.name);
+    this.client.channelKillAllListeners(this.name);
   }
 
-  killListenerConsumer(consumerId) {
-    this.client.killChannelListenerConsumer(consumerId);
+  getOutputConsumerStatsList() {
+    return this.client.channelGetOutputConsumerStatsList(this.name);
+  }
+
+  getListenerConsumerStatsList(eventName) {
+    return this.client.channelGetListenerConsumerStatsList(this.name, eventName);
+  }
+
+  getAllListenersConsumerStatsList() {
+    return this.client.channelGetAllListenersConsumerStatsList(this.name);
+  }
+
+  getOutputBackpressure() {
+    return this.client.channelGetOutputBackpressure(this.name);
   }
 
   getListenerBackpressure(eventName) {
-    return this.client.getChannelListenerBackpressure(this.name, eventName);
+    return this.client.channelGetListenerBackpressure(this.name, eventName);
   }
 
   getAllListenersBackpressure() {
-    return this.client.getAllChannelListenersBackpressure(this.name);
+    return this.client.channelGetAllListenersBackpressure(this.name);
   }
 
-  getListenerConsumerBackpressure(consumerId) {
-    return this.client.getChannelListenerConsumerBackpressure(consumerId);
+  hasOutputConsumer(consumerId) {
+    return this.client.channelHasOutputConsumer(this.name, consumerId);
   }
 
   hasListenerConsumer(eventName, consumerId) {
-    return this.client.hasChannelListenerConsumer(this.name, eventName, consumerId);
+    return this.client.channelHasListenerConsumer(this.name, eventName, consumerId);
   }
 
   hasAnyListenerConsumer(consumerId) {
-    return this.client.hasAnyChannelListenerConsumer(this.name, consumerId);
-  }
-
-  close() {
-    this.client.closeChannel(this.name);
+    return this.client.channelHasAnyListenerConsumer(this.name, consumerId);
   }
 
   get state() {
