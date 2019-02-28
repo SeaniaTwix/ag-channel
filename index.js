@@ -1,7 +1,7 @@
 const ConsumableStream = require('consumable-stream');
 
 class AGChannel extends ConsumableStream {
-  constructor(name, client, eventDemux, dataStream) {
+  constructor(name, client, eventDemux, dataDemux) {
     super();
     this.PENDING = AGChannel.PENDING;
     this.SUBSCRIBED = AGChannel.SUBSCRIBED;
@@ -11,7 +11,7 @@ class AGChannel extends ConsumableStream {
     this.client = client;
 
     this._eventDemux = eventDemux;
-    this._dataStream = dataStream;
+    this._dataStream = dataDemux.stream(this.name);
   }
 
   createConsumer(timeout) {
@@ -23,11 +23,63 @@ class AGChannel extends ConsumableStream {
   }
 
   closeListener(eventName) {
-    this._eventDemux.close(`${this.name}/${eventName}`);
+    this.client.closeChannelListener(this.name, eventName);
   }
 
   closeAllListeners() {
-    this._eventDemux.closeAll();
+    this.client.closeAllChannelListeners(this.name);
+  }
+
+  getDataBackpressure() {
+    return this.client.getChannelDataBackpressure(this.name);
+  }
+
+  getBackpressure() {
+    return this.client.getChannelBackpressure(this.name);
+  }
+
+  getListenerConsumerStats(consumerId) {
+    return this.client.getChannelListenerConsumerStats(consumerId);
+  }
+
+  getListenerConsumerStatsList(eventName) {
+    return this.client.getChannelListenerConsumerStatsList(this.name, eventName);
+  }
+
+  getAllListenersConsumerStatsList() {
+    return this.client.getAllChannelListenerConsumerStatsList(this.name);
+  }
+
+  killListener(eventName) {
+    this.client.killChannelListener(this.name, eventName);
+  }
+
+  killAllListeners() {
+    this.client.killAllChannelListeners(this.name);
+  }
+
+  killListenerConsumer(consumerId) {
+    this.client.killChannelListenerConsumer(consumerId);
+  }
+
+  getListenerBackpressure(eventName) {
+    return this.client.getChannelListenerBackpressure(this.name, eventName);
+  }
+
+  getAllListenersBackpressure() {
+    return this.client.getAllChannelListenersBackpressure(this.name);
+  }
+
+  getListenerConsumerBackpressure(consumerId) {
+    return this.client.getChannelListenerConsumerBackpressure(consumerId);
+  }
+
+  hasListenerConsumer(eventName, consumerId) {
+    return this.client.hasChannelListenerConsumer(this.name, eventName, consumerId);
+  }
+
+  hasAnyListenerConsumer(consumerId) {
+    return this.client.hasAnyChannelListenerConsumer(this.name, consumerId);
   }
 
   close() {
