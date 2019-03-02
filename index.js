@@ -87,7 +87,7 @@ class AGChannel extends ConsumableStream {
   }
 
   killOutput() {
-    this.channelKillOutput(this.name);
+    this.client.channelKillOutput(this.name);
   }
 
   killListener(eventName) {

@@ -1,6 +1,6 @@
 {
   "name": "ag-channel",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Channel object for Asyngular",
   "main": "index.js",
   "repository": {
