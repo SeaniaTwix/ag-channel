@@ -1,11 +1,11 @@
 {
   "name": "ag-channel",
-  "version": "5.0.0",
-  "description": "Channel object for Asyngular",
+  "version": "1.0.0",
+  "description": "Channel object for Asyngular (esm)",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SocketCluster/ag-channel.git"
+    "url": "https://github.com/SeaniaTwix/ag-channel.git"
   },
   "dependencies": {
     "consumable-stream": "^2.0.0"
@@ -21,7 +21,8 @@
   "author": "Jonathan Gros-Dubois",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/SocketCluster/ag-channel/issues"
+    "url": "https://github.com/SeaniaTwix/ag-channel/issues"
   },
-  "homepage": "https://github.com/SocketCluster/ag-channel"
+  "homepage": "https://github.com/SeaniaTwix/ag-channel",
+  "type": "module"
 }

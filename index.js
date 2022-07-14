@@ -1,6 +1,9 @@
-const ConsumableStream = require('consumable-stream');
+import { ConsumableStream } from "consumable-stream";
 
-class AGChannel extends ConsumableStream {
+export class AGChannel extends ConsumableStream {
+  static PENDING = "pending";
+  static SUBSCRIBED = "subscribed";
+  static UNSUBSCRIBED = "unsubscribed";
   constructor(name, client, eventDemux, dataDemux) {
     super();
     this.PENDING = AGChannel.PENDING;
@@ -103,7 +106,10 @@ class AGChannel extends ConsumableStream {
   }
 
   getListenerConsumerStatsList(eventName) {
-    return this.client.channelGetListenerConsumerStatsList(this.name, eventName);
+    return this.client.channelGetListenerConsumerStatsList(
+      this.name,
+      eventName
+    );
   }
 
   getAllListenersConsumerStatsList() {
@@ -127,7 +133,11 @@ class AGChannel extends ConsumableStream {
   }
 
   hasListenerConsumer(eventName, consumerId) {
-    return this.client.channelHasListenerConsumer(this.name, eventName, consumerId);
+    return this.client.channelHasListenerConsumer(
+      this.name,
+      eventName,
+      consumerId
+    );
   }
 
   hasAnyListenerConsumer(consumerId) {
@@ -139,7 +149,7 @@ class AGChannel extends ConsumableStream {
   }
 
   set state(value) {
-    throw new Error('Cannot directly set channel state');
+    throw new Error("Cannot directly set channel state");
   }
 
   get options() {
@@ -147,7 +157,7 @@ class AGChannel extends ConsumableStream {
   }
 
   set options(value) {
-    throw new Error('Cannot directly set channel options');
+    throw new Error("Cannot directly set channel options");
   }
 
   subscribe(options) {
@@ -170,9 +180,3 @@ class AGChannel extends ConsumableStream {
     return this.client.invokePublish(this.name, data);
   }
 }
-
-AGChannel.PENDING = 'pending';
-AGChannel.SUBSCRIBED = 'subscribed';
-AGChannel.UNSUBSCRIBED = 'unsubscribed';
-
-module.exports = AGChannel;
